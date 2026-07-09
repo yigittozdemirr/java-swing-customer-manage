@@ -95,11 +95,11 @@ Proje **katmanlı mimari (Layered Architecture)** prensibine göre tasarlanmış
 
 ### Ön Gereksinimler
 
-| Araç | Minimum Versiyon |
-|------|-----------------|
-| Java JDK | 17+ |
-| MySQL Server | 8.0+ |
-| IntelliJ IDEA | 2023.1+ (önerilir) |
+| Araç | Minimum Versiyon | Açıklama |
+|------|-----------------|----------|
+| Java JDK | 17+ | Derleme ve çalıştırma |
+| XAMPP | 3.3+ | Apache + MySQL sunucusu |
+| IntelliJ IDEA | 2023.1+ | IDE (önerilir) |
 
 ### 1. Projeyi Klonlayın
 
@@ -108,24 +108,28 @@ git clone https://github.com/kullanici-adi/musteri-yonetim-sistemi.git
 cd musteri-yonetim-sistemi
 ```
 
-### 2. Veritabanını Kurun
+### 2. XAMPP'ı Başlatın & Veritabanını Kurun
 
-MySQL sunucunuzda aşağıdaki SQL dosyasını çalıştırın:
+1. **XAMPP Control Panel**'i açın
+2. **Apache** ve **MySQL** servislerini **Start** butonuyla başlatın
+3. Tarayıcıda [http://localhost/phpmyadmin](http://localhost/phpmyadmin) adresine gidin
+4. **Import** sekmesine tıklayın → `db/customermanage.sql` dosyasını seçin → **Go** butonuna tıklayın
 
-```bash
-mysql -u root -p < db/customermanage.sql
-```
-
-Veya MySQL Workbench / phpMyAdmin üzerinden `db/customermanage.sql` dosyasını import edin.
+> **Alternatif:** XAMPP Shell üzerinden de çalıştırabilirsiniz:
+> ```bash
+> mysql -u root < db/customermanage.sql
+> ```
 
 ### 3. Veritabanı Bağlantısını Yapılandırın
 
-`src/core/Database.java` dosyasındaki bağlantı bilgilerini kendi ortamınıza göre güncelleyin:
+XAMPP varsayılan ayarlarıyla çalışıyorsanız herhangi bir değişiklik yapmanıza **gerek yoktur**.
+
+Özel ayarlarınız varsa `src/core/Database.java` dosyasını güncelleyin:
 
 ```java
 private final String DB_URL      = "jdbc:mysql://localhost:3306/customermanage";
 private final String DB_USERNAME = "root";
-private final String DB_PASSWORD = "";  // MySQL şifrenizi girin
+private final String DB_PASSWORD = "";  // XAMPP varsayılanı boştur
 ```
 
 ### 4. MySQL Connector/J
