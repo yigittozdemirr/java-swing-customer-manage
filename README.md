@@ -104,8 +104,8 @@ Proje **katmanlı mimari (Layered Architecture)** prensibine göre tasarlanmış
 ### 1. Projeyi Klonlayın
 
 ```bash
-git clone https://github.com/kullanici-adi/musteri-yonetim-sistemi.git
-cd musteri-yonetim-sistemi
+git clone https://github.com/yigittozdemirr/java-swing-customer-manage.git
+cd java-swing-customer-manage
 ```
 
 ### 2. XAMPP'ı Başlatın & Veritabanını Kurun
