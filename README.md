@@ -1,288 +1,211 @@
-# 🏢 Müşteri Yönetim Sistemi
+# Müşteri Yönetim Sistemi
 
-> Java Swing tabanlı, MySQL destekli masaüstü CRM (Müşteri İlişkileri Yönetimi) uygulaması.
+[![Java](https://img.shields.io/badge/Java-17%2B-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Swing](https://img.shields.io/badge/GUI-Java%20Swing-007396?style=flat-square)](https://docs.oracle.com/javase/tutorial/uiswing/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-![Java](https://img.shields.io/badge/Java-17%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Swing](https://img.shields.io/badge/GUI-Java%20Swing-007396?style=for-the-badge&logo=java&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+Müşteri, ürün ve sipariş süreçlerini tek bir uygulamadan yönetmeyi sağlayan, Java Swing ve MySQL tabanlı masaüstü CRM uygulaması. Patika.dev Full Stack Java Geliştirici Eğitimi kapsamında geliştirilmiştir.
 
----
+## İçindekiler
 
-## 📋 İçindekiler
+- [Özellikler](#özellikler)
+- [Mimari](#mimari)
+- [Kurulum](#kurulum)
+- [Kullanım](#kullanım)
+- [Veritabanı şeması](#veritabanı-şeması)
+- [Proje yapısı](#proje-yapısı)
+- [Teknolojiler](#teknolojiler)
+- [Katkıda bulunma](#katkıda-bulunma)
+- [Lisans](#lisans)
 
-- [Hakkında](#-hakkında)
-- [Özellikler](#-özellikler)
-- [Mimari](#-mimari)
-- [Kurulum](#-kurulum)
-- [Kullanım](#-kullanım)
-- [Veritabanı Şeması](#-veritabanı-şeması)
-- [Proje Yapısı](#-proje-yapısı)
-- [Teknolojiler](#-teknolojiler)
-- [Ekran Görüntüleri](#-ekran-görüntüleri)
-- [Lisans](#-lisans)
+## Özellikler
 
----
+### Kullanıcı
 
-## 📖 Hakkında
-
-**Müşteri Yönetim Sistemi**, küçük ve orta ölçekli işletmelerin müşteri, ürün ve sipariş süreçlerini tek bir masaüstü uygulamadan yönetmesini sağlayan bir CRM çözümüdür. Kullanıcı dostu Swing arayüzü ile hızlı ve etkili operasyonlar sunar.
-
----
-
-## ✨ Özellikler
-
-### 🔐 Kullanıcı Yönetimi
-- E-posta ve şifre ile güvenli giriş sistemi
-- E-posta doğrulaması
+- E-posta ve şifre ile giriş
+- E-posta biçimi doğrulaması
 - Kullanıcıya özel karşılama ekranı
 
-### 👥 Müşteri Yönetimi
-- Müşteri ekleme, güncelleme ve silme (CRUD)
+### Müşteriler
+
+- Müşteri ekleme, güncelleme ve silme
 - **Bireysel** ve **Kurumsal** müşteri tipleri
-- İsim ve tipe göre filtreleme / arama
-- Sağ tık menüsü ile hızlı işlem
+- İsme ve tipe göre filtreleme
+- Sağ tık menüsüyle hızlı işlem
 
-### 📦 Ürün Yönetimi
-- Ürün ekleme, güncelleme ve silme (CRUD)
+### Ürünler
+
+- Ürün ekleme, güncelleme ve silme
 - Ürün kodu, fiyat ve stok takibi
-- İsim, kod ve stok durumuna göre filtreleme
-- Stok kontrolü ile sepete ekleme
+- İsme, koda ve stok durumuna göre filtreleme
 
-### 🛒 Sepet & Sipariş Sistemi
-- Ürünleri sepete ekleme (sağ tık menüsü)
-- Sepet toplam tutar ve ürün sayısı gösterimi
-- Müşteri seçerek sipariş oluşturma
-- Sipariş notu ve tarih kaydı
-- Sipariş geçmişi görüntüleme
+### Sepet ve siparişler
 
-### 🎨 Arayüz
-- **Nimbus** Look and Feel teması
-- Sekmeli (tabbed) dashboard tasarımı
-- Türkçe dil desteği
-- Sezgisel popup menüler
+- Stok kontrolüyle sepete ürün ekleme
+- Sepet toplamı ve ürün sayısı gösterimi
+- Müşteri seçerek not ve tarihle sipariş oluşturma
+- Sipariş geçmişi
 
----
+### Arayüz
 
-## 🏗 Mimari
+- Nimbus görünümü ve sekmeli kontrol paneli
+- Türkçe arayüz
 
-Proje **katmanlı mimari (Layered Architecture)** prensibine göre tasarlanmıştır:
+## Mimari
 
-```
-┌─────────────────────────────────┐
-│          🖥️ View (UI)           │  ← Swing arayüz bileşenleri
-├─────────────────────────────────┤
-│       ⚙️ Business (Controller)  │  ← İş kuralları & veri doğrulama
-├─────────────────────────────────┤
-│       💾 DAO (Data Access)      │  ← Veritabanı CRUD işlemleri
-├─────────────────────────────────┤
-│       📦 Entity (Model)        │  ← Veri taşıma nesneleri
-├─────────────────────────────────┤
-│       🔧 Core (Utilities)      │  ← DB bağlantısı & yardımcılar
-├─────────────────────────────────┤
-│         🗄️ MySQL Database       │  ← Kalıcı veri depolama
-└─────────────────────────────────┘
+Proje katmanlı mimariye göre düzenlenmiştir:
+
+```mermaid
+flowchart TD
+    V["View: Swing arayüzü"] --> B["Business: iş kuralları ve doğrulama"]
+    B --> D["DAO: veritabanı işlemleri"]
+    D --> DB[("MySQL")]
+    E["Entity: veri modelleri"] -.-> V & B & D
+    C["Core: bağlantı ve yardımcılar"] -.-> V & D
 ```
 
-**Tasarım Desenleri:**
-- **Singleton Pattern** → Veritabanı bağlantı yönetimi (`Database.java`)
-- **DAO Pattern** → Veri erişim katmanı soyutlaması
-- **MVC Pattern** → Model-View-Controller ayrımı
+**Tasarım desenleri:**
 
----
+- **Singleton:** Veritabanı bağlantısı (`Database.java`)
+- **DAO:** Veri erişim katmanı
+- **MVC:** Model, görünüm ve denetleyici ayrımı
 
-## 🚀 Kurulum
+## Kurulum
 
-### Ön Gereksinimler
+### Gereksinimler
 
-| Araç | Minimum Versiyon | Açıklama |
-|------|-----------------|----------|
+| Araç | Sürüm | Açıklama |
+| --- | --- | --- |
 | Java JDK | 17+ | Derleme ve çalıştırma |
-| XAMPP | 3.3+ | Apache + MySQL sunucusu |
-| IntelliJ IDEA | 2023.1+ | IDE (önerilir) |
+| XAMPP ya da MySQL | MySQL 8.0+ | Veritabanı sunucusu |
+| IntelliJ IDEA | 2023.1+ | Arayüz formları IntelliJ GUI Designer ile derlenir |
+| MySQL Connector/J | 9.7.0 | JDBC sürücüsü (depoda yoktur, aşağıdan indirilir) |
 
-### 1. Projeyi Klonlayın
+### 1. Projeyi klonlayın
 
 ```bash
 git clone https://github.com/yigittozdemirr/java-swing-customer-manage.git
 cd java-swing-customer-manage
 ```
 
-### 2. XAMPP'ı Başlatın & Veritabanını Kurun
+### 2. Veritabanını kurun
 
-1. **XAMPP Control Panel**'i açın
-2. **Apache** ve **MySQL** servislerini **Start** butonuyla başlatın
-3. Tarayıcıda [http://localhost/phpmyadmin](http://localhost/phpmyadmin) adresine gidin
-4. **Import** sekmesine tıklayın → `db/customermanage.sql` dosyasını seçin → **Go** butonuna tıklayın
+XAMPP Control Panel'den **Apache** ve **MySQL** servislerini başlatın. Ardından [phpMyAdmin](http://localhost/phpmyadmin) üzerinden **İçe Aktar** sekmesini açın ve `db/customermanage.sql` dosyasını yükleyin.
 
-> **Alternatif:** XAMPP Shell üzerinden de çalıştırabilirsiniz:
-> ```bash
-> mysql -u root < db/customermanage.sql
-> ```
+Komut satırını tercih ederseniz şu komutu çalıştırın. Bu yöntem için Apache gerekmez.
 
-### 3. Veritabanı Bağlantısını Yapılandırın
+```bash
+mysql -u root < db/customermanage.sql
+```
 
-XAMPP varsayılan ayarlarıyla çalışıyorsanız herhangi bir değişiklik yapmanıza **gerek yoktur**.
+### 3. Bağlantı ayarlarını kontrol edin
 
-Özel ayarlarınız varsa `src/core/Database.java` dosyasını güncelleyin:
+Varsayılan XAMPP ayarlarında değişiklik gerekmez. Farklı ayarlar için `src/core/Database.java` dosyasını düzenleyin:
 
 ```java
-private final String DB_URL      = "jdbc:mysql://localhost:3306/customermanage";
+private final String DB_URL = "jdbc:mysql://localhost:3306/customermanage";
 private final String DB_USERNAME = "root";
-private final String DB_PASSWORD = "";  // XAMPP varsayılanı boştur
+private final String DB_PASSWORD = "";
 ```
 
-### 4. MySQL Connector/J
+### 4. JDBC sürücüsünü ekleyin
 
-Proje, **MySQL Connector/J 9.7.0** kullanmaktadır. JAR dosyası proje dizininde bulunmaktadır.
+1. [`mysql-connector-j-9.7.0.jar`](https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/9.7.0/mysql-connector-j-9.7.0.jar) dosyasını indirip proje klasörüne koyun.
+2. IntelliJ IDEA'da **File → Project Structure → Libraries → +** yolunu izleyerek dosyayı ekleyin.
 
-> IntelliJ IDEA kullanıyorsanız: `File → Project Structure → Libraries → +` ile `mysql-connector-j-9.7.0.jar` dosyasını ekleyin.
+### 5. Uygulamayı çalıştırın
 
-### 5. Projeyi Çalıştırın
+IntelliJ IDEA'da `src` klasörünü kaynak klasörü olarak işaretleyin, `src/App.java` dosyasını açın ve **Run** düğmesine tıklayın.
 
-IntelliJ IDEA'da `src/App.java` dosyasını açıp **Run** butonuna tıklayın.
+## Kullanım
 
----
+1. Varsayılan hesapla giriş yapın: `admin@patika.dev` / `123123`
+2. **Müşteriler** sekmesinden müşterileri yönetin.
+3. **Ürünler** sekmesinden ürün kataloğunu yönetin ve sağ tık menüsüyle sepete ürün ekleyin.
+4. **Sipariş Oluştur** sekmesinden müşteri seçip siparişi onaylayın.
+5. **Siparişler** sekmesinden sipariş geçmişini görüntüleyin.
 
-## 💡 Kullanım
+> **Not:** Bu bir eğitim projesidir. Şifreler veritabanında düz metin olarak saklanır, bu nedenle gerçek verilerle kullanmayın.
 
-1. **Giriş Yapın** → E-posta ve şifre ile sisteme giriş yapın
-   - Varsayılan kullanıcı: `admin@patika.dev` / `123123`
-2. **Müşteriler** sekmesinden müşteri ekleyin, düzenleyin veya silin
-3. **Ürünler** sekmesinden ürün kataloğunuzu yönetin
-4. **Sipariş Oluştur** sekmesinde ürünleri sepete ekleyin, müşteri seçin ve siparişi onaylayın
-5. **Siparişler** sekmesinden tüm sipariş geçmişini görüntüleyin
+## Veritabanı şeması
 
----
+```mermaid
+erDiagram
+    customer ||--o{ cart : "sipariş verir"
+    product ||--o{ cart : "siparişte yer alır"
+    product ||--o{ basket : "sepette yer alır"
 
-## 🗄 Veritabanı Şeması
-
+    user {
+        int id PK
+        varchar name
+        varchar mail
+        varchar password
+    }
+    customer {
+        int id PK
+        varchar name
+        enum type
+        varchar phone
+        varchar mail
+        text adress
+    }
+    product {
+        int id PK
+        varchar name
+        varchar code
+        int price
+        int stock
+    }
+    basket {
+        int id PK
+        int product_id FK
+    }
+    cart {
+        int id PK
+        int customer_id FK
+        int product_id FK
+        int price
+        text note
+        date date
+    }
 ```
-┌──────────┐      ┌───────────┐      ┌──────────┐
-│   user   │      │  customer │      │ product  │
-├──────────┤      ├───────────┤      ├──────────┤
-│ id (PK)  │      │ id (PK)   │◄──┐  │ id (PK)  │◄──┐
-│ name     │      │ name      │   │  │ name     │   │
-│ mail     │      │ type      │   │  │ code     │   │
-│ password │      │ phone     │   │  │ price    │   │
-└──────────┘      │ mail      │   │  │ stock    │   │
-                  │ adress    │   │  └──────────┘   │
-                  └───────────┘   │                  │
-                                  │                  │
-                  ┌───────────┐   │  ┌──────────┐   │
-                  │   cart    │   │  │  basket  │   │
-                  ├───────────┤   │  ├──────────┤   │
-                  │ id (PK)   │   │  │ id (PK)  │   │
-                  │ customer_id│───┘  │product_id│───┘
-                  │ product_id│───┐  └──────────┘
-                  │ price     │   │
-                  │ note      │   │
-                  │ date      │   │
-                  └───────────┘   │
-                                  └── product(id)
-```
 
----
+## Proje yapısı
 
-## 📁 Proje Yapısı
-
-```
-musteri-yonetim-sistemi/
-│
-├── src/
-│   ├── App.java                    # Uygulama giriş noktası
-│   │
-│   ├── core/                       # Çekirdek yardımcı sınıflar
-│   │   ├── Database.java           #   Singleton DB bağlantısı
-│   │   ├── Helper.java             #   UI yardımcıları & doğrulama
-│   │   └── Item.java               #   ComboBox anahtar-değer çifti
-│   │
-│   ├── entity/                     # Veri modelleri (POJO)
-│   │   ├── User.java               #   Kullanıcı modeli
-│   │   ├── Customer.java           #   Müşteri modeli
-│   │   ├── Product.java            #   Ürün modeli
-│   │   ├── Cart.java               #   Sipariş modeli
-│   │   └── Basket.java             #   Sepet modeli
-│   │
-│   ├── dao/                        # Veri erişim katmanı
-│   │   ├── UserDao.java            #   Kullanıcı CRUD
-│   │   ├── CustomerDao.java        #   Müşteri CRUD + filtreleme
-│   │   ├── ProductDao.java         #   Ürün CRUD + filtreleme
-│   │   ├── CartDao.java            #   Sipariş CRUD
-│   │   └── BasketDao.java          #   Sepet CRUD
-│   │
-│   ├── business/                   # İş mantığı katmanı
-│   │   ├── UserController.java     #   Kullanıcı iş kuralları
-│   │   ├── CustomerController.java #   Müşteri iş kuralları
-│   │   ├── ProductController.java  #   Ürün iş kuralları
-│   │   ├── CartController.java     #   Sipariş iş kuralları
-│   │   └── BasketController.java   #   Sepet iş kuralları
-│   │
-│   └── view/                       # Arayüz katmanı
-│       ├── LoginUI.java            #   Giriş ekranı
-│       ├── DashboardUI.java        #   Ana kontrol paneli
-│       ├── CustomerUI.java         #   Müşteri ekleme/düzenleme
-│       ├── ProductUI.java          #   Ürün ekleme/düzenleme
-│       ├── CartUI.java             #   Sipariş oluşturma
-│       └── *.form                  #   IntelliJ GUI Designer formları
-│
+```text
+java-swing-customer-manage/
 ├── db/
-│   └── customermanage.sql          # Veritabanı şeması & örnek veri
-│
-├── mysql-connector-j-9.7.0.jar     # MySQL JDBC sürücüsü
-├── .gitignore                      # Git ignore kuralları
-├── LICENSE                         # MIT Lisansı
-└── README.md                       # Bu dosya
+│   └── customermanage.sql      # Şema ve örnek veri
+├── src/
+│   ├── App.java                # Giriş noktası
+│   ├── core/                   # Database, Helper, Item
+│   ├── entity/                 # User, Customer, Product, Cart, Basket
+│   ├── dao/                    # Veri erişim sınıfları
+│   ├── business/               # İş kuralları
+│   └── view/                   # Arayüz sınıfları ve .form dosyaları
+├── LICENSE
+└── README.md
 ```
 
----
+## Teknolojiler
 
-## 🛠 Teknolojiler
+| Teknoloji | Kullanım |
+| --- | --- |
+| Java 17+ | Programlama dili |
+| Java Swing ve Nimbus | Masaüstü arayüz |
+| IntelliJ GUI Designer | Form tasarımı |
+| MySQL 8.0+ | İlişkisel veritabanı |
+| JDBC ve Connector/J 9.7.0 | Veritabanı bağlantısı |
 
-| Teknoloji | Kullanım Amacı |
-|-----------|---------------|
-| **Java 17+** | Ana programlama dili |
-| **Java Swing** | Masaüstü GUI framework |
-| **MySQL 8.0+** | İlişkisel veritabanı |
-| **JDBC** | Veritabanı bağlantı API'si |
-| **MySQL Connector/J 9.7.0** | MySQL JDBC sürücüsü |
-| **IntelliJ IDEA GUI Designer** | Form tasarım aracı |
-| **Nimbus L&F** | Modern görünüm teması |
+## Katkıda bulunma
 
----
+1. Depoyu fork edin.
+2. Yeni bir dal oluşturun: `git checkout -b feature/yeni-ozellik`
+3. Değişikliklerinizi commit edin: `git commit -m "feat: yeni özellik"`
+4. Dalı gönderin: `git push origin feature/yeni-ozellik`
+5. Pull request açın.
 
-## 📸 Ekran Görüntüleri
+## Lisans
 
-> _Ekran görüntüleri eklenecektir._
-
-<!-- Ekran görüntülerinizi screenshots/ klasörüne koyup aşağıdaki gibi ekleyebilirsiniz:
-![Giriş Ekranı](screenshots/login.png)
-![Dashboard](screenshots/dashboard.png)
-![Müşteri Yönetimi](screenshots/customers.png)
--->
-
----
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repoyu **fork** edin
-2. Feature branch oluşturun (`git checkout -b feature/yeni-ozellik`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: Yeni özellik eklendi'`)
-4. Branch'i push edin (`git push origin feature/yeni-ozellik`)
-5. **Pull Request** açın
-
----
-
-## 📄 Lisans
-
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakınız.
-
----
-
-<div align="center">
-
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
-
-**Patika.dev** Full Stack Java Geliştirici Eğitimi kapsamında geliştirilmiştir.
-
-</div>
+Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
